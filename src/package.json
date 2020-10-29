@@ -1,0 +1,23 @@
+{
+  "name": "azure-spot-vm-analysis",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LATAMOCPTECHTEAM/azure-spot-vm-analysis.git"
+  },
+  "scripts": {
+    "start": "node index.js analyze",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "colors": "^1.4.0",
+    "form-data": "^3.0.0",
+    "qs": "^6.9.4",
+    "yargs": "^16.1.0"
+  }
+}
