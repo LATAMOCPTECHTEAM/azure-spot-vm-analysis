@@ -35,18 +35,20 @@ async function main() {
         var meter = vmMeters.find(getRateMatch(vm));
 
         if (!meter) {
-            throw new Error("Meter not Found")
+            logger.printError(`Virtual Machine Meter Not Found`)
+            continue;
         } else {
-            logger.printSuccess(`Rate Meter: Match.`);
+            logger.printSuccess(`Rate Meter: Match. `);
         }
 
         let spotMeters = await retailRateService.getRetailRates(meter.MeterName, vm.location);
         var spotMeter = spotMeters.find(getSpotMeterMatch(meter));
 
         if (!spotMeter) {
-            throw new Error("Spot Meter not Found")
+            logger.printError(`Spot Instances Not Found or not Available for this VM: ${vm.properties.hardwareProfile.vmSize}`);
+            continue;
         } else {
-            logger.printSuccess(` Spot Rate Meter: Match`);
+            logger.printSuccess(`Spot Rate Meter: Match`);
         }
 
         var analysisResult = new AnalysisResult(vm, meter, spotMeter);
