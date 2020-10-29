@@ -46,13 +46,13 @@ To run the project you need the following data:
 
 To run the project in your terminal run the command
 ```
- node index.js analyze \\
-        --tenantId <<TENANT_ID>> \\
-        --subscription <<SUBSCRIPTION_ID>> \\
-        --client_id <<CLIENT_ID> \\
-        --client_secret <<CLIENT_SECRET> \\
-        --offerId <<OFFER_ID>> \\
-        --location <<SUBSCRIPTION_REGION> \\
+ node index.js analyze \
+        --tenantId <<TENANT_ID>> \
+        --subscription <<SUBSCRIPTION_ID>> \
+        --client_id <<CLIENT_ID> \
+        --client_secret <<CLIENT_SECRET> \
+        --offerId <<OFFER_ID>> \
+        --location <<SUBSCRIPTION_REGION> \
         --runningOnly <<true if you only want the running VMs>>
 ```        
 
