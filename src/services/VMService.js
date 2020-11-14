@@ -4,23 +4,23 @@ class VMService {
 
     async getVirtualMachines(subscriptionId, runningOnly, authToken) {
         let azVms = await azureService.listVMs(subscriptionId, authToken);
-        azVms = this.filterNonSpotVMs(azVms);
+        azVms = azVms.filter(this.filterNonSpotVMs());
         if (runningOnly) {
             let azVmsStatus = await azureService.listVMStatus(subscriptionId, authToken);
-            azVms = this.filterRunningVMs(azVms, azVmsStatus);
+            azVms = azVms.filter(filterRunningVMs(azVmsStatus));
         }
         return azVms;
     }
 
-    filterRunningVMs(vmList, vmStatusList) {
-        let runningVmIds = vmStatusList
+    filterRunningVMs(azVmsStatus) {
+        let runningVmIds = azVmsStatus
             .filter(vm => vm.properties.instanceView.statuses.find(status => status.code.includes("PowerState")).code == "PowerState/running")
             .map(vm => vm.id);
-        return vmList.filter(vm => runningVmIds.includes(vm.id));
+        return (vm => runningVmIds.includes(vm.id));
     }
 
-    filterNonSpotVMs(vmList) {
-        return vmList.filter(x => x.properties.billingProfile == null);
+    filterNonSpotVMs() {
+        return (x => x.properties.billingProfile == null);
     }
 }
 

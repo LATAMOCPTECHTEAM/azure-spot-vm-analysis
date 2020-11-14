@@ -1,0 +1,26 @@
+name: Deployment [Release]
+
+on:
+  workflow_dispatch:
+  release:
+    types: [released]
+
+env:
+  tag: ${{ github.event.release.tag_name }}
+  helmPackageFile: azure-spot-vm-analysis-${{ github.event.release.tag_name }}.tgz
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKERHUB_USER }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        repository: latamocptechteam/azure-spot-vm-analysis
+        tags: ${{ github.event.release.tag_name }}
+        path: .
+        add_git_labels: true
+        push: true
