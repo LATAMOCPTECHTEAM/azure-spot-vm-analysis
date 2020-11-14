@@ -14,16 +14,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1.0.2
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v2.1.0
+      with:
+        buildkitd-flags: --debug
+    - name: Login
+      uses: docker/login-action@v1.6.0
       with:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        repository: latamocptechteam/azure-spot-vm-analysis
-        tags: ${{ github.event.release.tag_name }}
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        tags: latamocptechteam/azure-spot-vm-analysis:${{ github.event.release.tag_name }}
         context: ./src
-        path: .
-        add_git_labels: true
+        file: ./src/Dockerfile  
         push: true
