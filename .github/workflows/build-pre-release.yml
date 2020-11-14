@@ -16,6 +16,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1.0.2
+      with:
+        buildkitd-flags: --debug
     - name: Login
       uses: docker/login-action@v1.6.0
       with:
