@@ -21,9 +21,9 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v2.1.0
+    - name: Build and push
+      uses: docker/build-push-action@v2
       with:
-        tags: latamocptechteam/azure-spot-vm-analysis/${{ github.event.release.tag_name }}
-        context: ./src
+        tags: latamocptechteam/azure-spot-vm-analysis:${{ github.event.release.tag_name }}
+        context: src
         push: true
