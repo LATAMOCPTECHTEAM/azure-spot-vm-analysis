@@ -11,7 +11,7 @@ Tooling to analyze Azure Virtual Machines for possible savings using Spot Instan
 
 ## Required Software
 
-- [NodeJS](https://nodejs.org/en/)
+- [NodeJS](https://nodejs.org/en/) or [Docker](https://www.docker.com/)
 
 ## How to use it
 
@@ -37,12 +37,13 @@ To run the project you need the following data:
 5. Subscription Offer Id (you can find it in your subscription overview. Ex: MS-AZR-0015P)
 6. Your subscription Region (Ex: US)
 
-### 3. Preparing the project
+## (Option A) Running with NodeJS
+### 1. Preparing the project
 1. Clone this repository in your machine
 2. Enter the src folder. ```cd src```
 3. Run npm install to install the project dependencies. ```npm install```
 
-### 4. Running the project
+### 1. Running the project
 
 To run the project in your terminal run the command
 ```
@@ -55,8 +56,23 @@ To run the project in your terminal run the command
         --location <<SUBSCRIPTION_REGION> \
         --runningOnly <<true if you only want the running VMs>>
 ```        
+## (Option B) Running with Docker
 
-### 5. Checking the results
+
+With docker installed and running in your machine, check the [DockerHub](https://hub.docker.com/repository/docker/latamocptechteam/azure-spot-vm-analysis/tags) repository for the latest tag of this project:
+
+You can run the docker container with the following command
+```
+docker run latamocptechteam/azure-spot-vm-analysis:v0.1.1 --tenantId <<TENANT_ID>> \
+        --subscription <<SUBSCRIPTION_ID>> \
+        --client_id <<CLIENT_ID> \
+        --client_secret <<CLIENT_SECRET> \
+        --offerId <<OFFER_ID>> \
+        --location <<SUBSCRIPTION_REGION> \
+        --runningOnly <<true if you only want the running VMs>> 
+```
+
+## Checking the results
 
 After running the script you will get the following results per VM and also consolidated.
 
@@ -69,4 +85,4 @@ After running the script you will get the following results per VM and also cons
 
 ### Notes:
 
-* The first time you run can take some time, as the Retail Rates API returns a big json with all the price meters from Azure. Those information are than cached in a local json file, so the following executions will take significatly less time.
+* **The first time you run can take some minutes**, as the Retail Rates API returns a big json with all the price meters from Azure. Those information are than cached in a local json file, so the following executions will take significatly less time.
